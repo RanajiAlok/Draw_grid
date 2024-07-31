@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#input-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#input-container div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#input-container label {
+    margin-right: 10px;
+}
+
+#draw-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 10px;
+}
+
+#draw-button:hover {
+    background-color: #45a049;
+}
+
+.jxgbox {
+    border: 1px solid #ccc;
+}

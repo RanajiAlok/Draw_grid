@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Drawing Tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.4.6/jsxgraphcore.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.4.6/jsxgraph.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="input-container">
+        <div>
+            <label for="columns">Number of Columns:</label>
+            <input type="number" id="columns" min="1" max="10" value="4">
+        </div>
+        <div>
+            <label for="rows">Number of Rows:</label>
+            <input type="number" id="rows" min="1" max="10" value="4">
+        </div>
+        <div>
+            <label for="element_draw_direction">Element Draw Direction:</label>
+            <select id="element_draw_direction">
+                <option value="row">Row</option>
+                <option value="col">Column</option>
+                <option value="cell">Cell</option>
+            </select>
+        </div>
+        <div>
+            <label for="shade_element">Shade Elements:</label>
+            <input type="number" id="shade_element" min="0" max="100" value="1">
+        </div>
+        <button id="draw-button">Draw Grid</button>
+    </div>
+    <div id="jxgbox" class="jxgbox" style="width:400px; height:400px;"></div>
+    <script src="script.js"></script>
+</body>
+</html>
