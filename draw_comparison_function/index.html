@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Grid and Shapes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Form -->
+        <div class="form-container" id="left-form-container">
+            <h2>Left Grid Settings</h2>
+            <form id="left-form">
+                <label for="left_image">Image Type:</label>
+                <select id="left_image" onchange="togglePolygonSidesInput('left')">
+                    <option value="car">Car</option>
+                    <option value="coin">Coin</option>
+                    <option value="star">Star</option>
+                    <option value="circle">Circle</option>
+                    <option value="square">Square</option>
+                    <option value="polygon">Polygon</option>
+                </select>
+                <br>
+                <label for="left_image_count">Number of Image:</label>
+                <input type="number" id="left_image_count" min="1" value="1">
+                <br>
+                <label for="left_rows">Number of Rows:</label>
+                <input type="number" id="left_rows" min="1" value="1">
+                <br>
+                <label for="left_columns">Number of Columns:</label>
+                <input type="number" id="left_columns" min="1" value="1">
+                <br>
+                <div id="left_polygon_sides_container" style="display:none;">
+                    <label for="left_polygon_sides">Number of Sides (for Polygon):</label>
+                    <input type="number" id="left_polygon_sides" min="3">
+                    <br>
+                </div>
+                <button type="button" onclick="drawShapes()">Draw</button>
+            </form>
+        </div>
+
+        <!-- Right Form -->
+        <div class="form-container" id="right-form-container">
+            <h2>Right Grid Settings</h2>
+            <form id="right-form">
+                <label for="right_image">Image Type:</label>
+                <select id="right_image" onchange="togglePolygonSidesInput('right')">
+                    <option value="car">Car</option>
+                    <option value="coin">Coin</option>
+                    <option value="star">Star</option>
+                    <option value="circle">Circle</option>
+                    <option value="square">Square</option>
+                    <option value="polygon">Polygon</option>
+                </select>
+                <br>
+                <label for="right_image_count">Number of Image:</label>
+                <input type="number" id="right_image_count" min="1" value="1">
+                <br>
+                <label for="right_rows">Number of Rows:</label>
+                <input type="number" id="right_rows" min="1" value="1">
+                <br>
+                <label for="right_columns">Number of Columns:</label>
+                <input type="number" id="right_columns" min="1" value="1">
+                <br>
+                <div id="right_polygon_sides_container" style="display:none;">
+                    <label for="right_polygon_sides">Number of Sides (for Polygon):</label>
+                    <input type="number" id="right_polygon_sides" min="3">
+                    <br>
+                </div>
+                <button type="button" onclick="drawShapes()">Draw</button>
+            </form>
+        </div>
+
+        <!-- Canvases for Drawing -->
+        <div class="canvas-container">
+            <div id="left-canvas" class="canvas"></div>
+            <div id="right-canvas" class="canvas"></div>
+        </div>
+    </div>
+
+    <!-- Include external scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.7/two.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.2.12/jsxgraph.min.js"></script>
+    <script src="schema.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
