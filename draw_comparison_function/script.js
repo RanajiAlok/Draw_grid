@@ -51,7 +51,7 @@ function createShape(shape, x, y, size) {
             element.setAttribute('cx', x);
             element.setAttribute('cy', y);
             element.setAttribute('r', size / 2);
-            element.setAttribute('fill', '#FF0000'); // Red color for circle
+            element.setAttribute('fill', '#FFB6C1'); // light Pink color for circle
             break;
         case 'square':
             element = document.createElementNS(ns, 'rect');
@@ -59,10 +59,11 @@ function createShape(shape, x, y, size) {
             element.setAttribute('y', y - size / 2);
             element.setAttribute('width', size);
             element.setAttribute('height', size);
-            element.setAttribute('fill', '#00FF00'); // Green color for square
+            element.setAttribute('fill', '#FAFAD2'); // lightGoldenRodYellow for square
             break;
         case 'car':
             element = document.createElementNS(ns, 'image');
+            //element.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'https://lucide.dev/icons/car.svg');
             element.setAttributeNS('http://www.w3.org/1999/xlink', 'href', './assets/car.svg');
             element.setAttribute('x', x - size / 2);
             element.setAttribute('y', y - size / 2);
@@ -71,6 +72,7 @@ function createShape(shape, x, y, size) {
             break;
         case 'coin':
             element = document.createElementNS(ns, 'image');
+            //element.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'https://lucide.dev/icons/coins.svg');
             element.setAttributeNS('http://www.w3.org/1999/xlink', 'href', './assets/badge-indian-rupee.svg');
             element.setAttribute('x', x - size / 2);
             element.setAttribute('y', y - size / 2);
@@ -79,7 +81,7 @@ function createShape(shape, x, y, size) {
             break;
         default:
             element = createPolygon(shape, x, y, size);
-            element.setAttribute('fill', '#0000FF'); // Blue color for polygon
+            element.setAttribute('fill', '#E6E6FA'); // lavender for polygon
             break;
     }
 
