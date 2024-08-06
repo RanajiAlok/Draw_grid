@@ -13,30 +13,25 @@
             <h2>Left Grid Settings</h2>
             <form id="left-form">
                 <label for="left_image">Image Type:</label>
-                <select id="left_image" onchange="togglePolygonSidesInput('left')">
+                <select id="left_image">
                     <option value="car">Car</option>
                     <option value="coin">Coin</option>
                     <option value="star">Star</option>
                     <option value="circle">Circle</option>
                     <option value="square">Square</option>
-                    <option value="polygon">Polygon</option>
+                    <option value="triangle">Triangle</option>
+                    <option value="quadrilateral">Quadrilateral</option>
+                    <option value="pentagon">Pentagon</option>
+                    <option value="hexagon">Hexagon</option>
+                    <option value="heptagon">Heptagon</option>
+                    <option value="octagon">Octagon</option>
+                    <option value="nonagon">Nonagon</option>
+                    <option value="decagon">Decagon</option>
                 </select>
                 <br>
-                <label for="left_image_count">Number of Image:</label>
+                <label for="left_image_count">Number of Images:</label>
                 <input type="number" id="left_image_count" min="1" value="1">
                 <br>
-                <label for="left_rows">Number of Rows:</label>
-                <input type="number" id="left_rows" min="1" value="1">
-                <br>
-                <label for="left_columns">Number of Columns:</label>
-                <input type="number" id="left_columns" min="1" value="1">
-                <br>
-                <div id="left_polygon_sides_container" style="display:none;">
-                    <label for="left_polygon_sides">Number of Sides (for Polygon):</label>
-                    <input type="number" id="left_polygon_sides" min="3">
-                    <br>
-                </div>
-                <button type="button" onclick="drawShapes()">Draw</button>
             </form>
         </div>
 
@@ -45,32 +40,29 @@
             <h2>Right Grid Settings</h2>
             <form id="right-form">
                 <label for="right_image">Image Type:</label>
-                <select id="right_image" onchange="togglePolygonSidesInput('right')">
+                <select id="right_image">
                     <option value="car">Car</option>
                     <option value="coin">Coin</option>
                     <option value="star">Star</option>
                     <option value="circle">Circle</option>
                     <option value="square">Square</option>
-                    <option value="polygon">Polygon</option>
+                    <option value="triangle">Triangle</option>
+                    <option value="quadrilateral">Quadrilateral</option>
+                    <option value="pentagon">Pentagon</option>
+                    <option value="hexagon">Hexagon</option>
+                    <option value="heptagon">Heptagon</option>
+                    <option value="octagon">Octagon</option>
+                    <option value="nonagon">Nonagon</option>
+                    <option value="decagon">Decagon</option>
                 </select>
                 <br>
-                <label for="right_image_count">Number of Image:</label>
+                <label for="right_image_count">Number of Images:</label>
                 <input type="number" id="right_image_count" min="1" value="1">
                 <br>
-                <label for="right_rows">Number of Rows:</label>
-                <input type="number" id="right_rows" min="1" value="1">
-                <br>
-                <label for="right_columns">Number of Columns:</label>
-                <input type="number" id="right_columns" min="1" value="1">
-                <br>
-                <div id="right_polygon_sides_container" style="display:none;">
-                    <label for="right_polygon_sides">Number of Sides (for Polygon):</label>
-                    <input type="number" id="right_polygon_sides" min="3">
-                    <br>
-                </div>
-                <button type="button" onclick="drawShapes()">Draw</button>
             </form>
         </div>
+
+        <button type="button" onclick="generateShapes()">Generate Drawing</button>
 
         <!-- Canvases for Drawing -->
         <div class="canvas-container">
