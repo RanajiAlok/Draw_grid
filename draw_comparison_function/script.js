@@ -1,159 +1,124 @@
-function togglePolygonSidesInput(side) {
-    const imageSelect = document.getElementById(`${side}_image`);
-    const polygonSidesContainer = document.getElementById(`${side}_polygon_sides_container`);
-    
-    if (imageSelect.value === 'polygon') {
-        polygonSidesContainer.style.display = 'block';
-    } else {
-        polygonSidesContainer.style.display = 'none';
-    }
-}
+document.addEventListener("DOMContentLoaded", () => {
+    // Clear the drawing areas when the page is loaded
+    document.getElementById('left-canvas').innerHTML = '';
+    document.getElementById('right-canvas').innerHTML = '';
 
-function drawShapes() {
-    // Left Grid Inputs
+    // Bind the generateShapes function to the button click event
+    document.querySelector('button').addEventListener('click', generateShapes);
+});
+
+function generateShapes() {
     const leftImage = document.getElementById('left_image').value;
-    const leftImageCount = parseInt(document.getElementById('left_image_count').value, 10);
-    const leftRows = parseInt(document.getElementById('left_rows').value, 10);
-    const leftColumns = parseInt(document.getElementById('left_columns').value, 10);
-    const leftPolygonSides = document.getElementById('left_polygon_sides').value ? parseInt(document.getElementById('left_polygon_sides').value, 10) : null;
-
-    // Right Grid Inputs
+    const leftCount = parseInt(document.getElementById('left_image_count').value);
     const rightImage = document.getElementById('right_image').value;
-    const rightImageCount = parseInt(document.getElementById('right_image_count').value, 10);
-    const rightRows = parseInt(document.getElementById('right_rows').value, 10);
-    const rightColumns = parseInt(document.getElementById('right_columns').value, 10);
-    const rightPolygonSides = document.getElementById('right_polygon_sides').value ? parseInt(document.getElementById('right_polygon_sides').value, 10) : null;
+    const rightCount = parseInt(document.getElementById('right_image_count').value);
 
-    // Canvas Elements
-    const leftCanvas = document.getElementById('left-canvas');
-    const rightCanvas = document.getElementById('right-canvas');
+    // Clear existing content
+    document.getElementById('left-canvas').innerHTML = '';
+    document.getElementById('right-canvas').innerHTML = '';
 
-    // Clear previous drawings
-    leftCanvas.innerHTML = '';
-    rightCanvas.innerHTML = '';
-
-    // Create Two.js instances
-    const leftTwo = new Two({ width: leftCanvas.clientWidth, height: leftCanvas.clientHeight }).appendTo(leftCanvas);
-    const rightTwo = new Two({ width: rightCanvas.clientWidth, height: rightCanvas.clientHeight }).appendTo(rightCanvas);
-
-    // Draw grids and shapes
-    drawGrid(leftTwo, leftImage, leftImageCount, leftRows, leftColumns, leftPolygonSides);
-    drawGrid(rightTwo, rightImage, rightImageCount, rightRows, rightColumns, rightPolygonSides);
+    generateGrid('left-canvas', leftImage, leftCount);
+    generateGrid('right-canvas', rightImage, rightCount);
 }
 
-function drawGrid(two, image, count, rows, columns, polygonSides) {
-    const cellWidth = two.width / columns;
-    const cellHeight = two.height / rows;
+function generateGrid(gridId, shape, count) {
+    const container = document.getElementById(gridId);
+    
+    // Create and append SVG element
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("height", "100%");
+    container.appendChild(svg);
 
-    // Draw grid lines
-    for (let i = 0; i <= columns; i++) {
-        const x = i * cellWidth;
-        const line = two.makeLine(x, 0, x, two.height);
-        line.stroke = '#ccc';
-    }
+    const gridSize = Math.ceil(Math.sqrt(count));
+    const cellSize = 300 / gridSize;
 
-    for (let j = 0; j <= rows; j++) {
-        const y = j * cellHeight;
-        const line = two.makeLine(0, y, two.width, y);
-        line.stroke = '#ccc';
-    }
-
-    // Draw shapes
     for (let i = 0; i < count; i++) {
-        const x = (i % columns) * cellWidth + cellWidth / 2;
-        const y = Math.floor(i / columns) * cellHeight + cellHeight / 2;
-        createShape(two, image, polygonSides, Math.min(cellWidth, cellHeight) * 0.8, x, y);
+        const x = (i % gridSize) * cellSize + cellSize / 2;
+        const y = Math.floor(i / gridSize) * cellSize + cellSize / 2;
+        const shapeElement = createShape(shape, x, y, cellSize * 0.8);
+        svg.appendChild(shapeElement);
     }
-
-    two.update();
 }
 
-function createShape(two, type, polygonSides, size, x, y) {
-    switch (type) {
-        case 'car':
-            drawSimpleCar(two, size, x, y);
-            break;
-        case 'coin':
-            drawSimpleCoin(two, size, x, y);
-            break;
-        case 'star':
-            drawStar(two, size, x, y);
-            break;
+function createShape(shape, x, y, size) {
+    const ns = "http://www.w3.org/2000/svg";
+    let element;
+
+    switch (shape) {
         case 'circle':
-            drawCircle(two, size, x, y);
+            element = document.createElementNS(ns, 'circle');
+            element.setAttribute('cx', x);
+            element.setAttribute('cy', y);
+            element.setAttribute('r', size / 2);
+            element.setAttribute('fill', '#FF0000'); // Red color for circle
             break;
         case 'square':
-            drawSquare(two, size, x, y);
+            element = document.createElementNS(ns, 'rect');
+            element.setAttribute('x', x - size / 2);
+            element.setAttribute('y', y - size / 2);
+            element.setAttribute('width', size);
+            element.setAttribute('height', size);
+            element.setAttribute('fill', '#00FF00'); // Green color for square
             break;
-        case 'polygon':
-            drawPolygon(two, polygonSides, size, x, y);
+        case 'car':
+            element = document.createElementNS(ns, 'image');
+            element.setAttributeNS('http://www.w3.org/1999/xlink', 'href', './assets/car.svg');
+            element.setAttribute('x', x - size / 2);
+            element.setAttribute('y', y - size / 2);
+            element.setAttribute('width', size);
+            element.setAttribute('height', size);
+            break;
+        case 'coin':
+            element = document.createElementNS(ns, 'image');
+            element.setAttributeNS('http://www.w3.org/1999/xlink', 'href', './assets/badge-indian-rupee.svg');
+            element.setAttribute('x', x - size / 2);
+            element.setAttribute('y', y - size / 2);
+            element.setAttribute('width', size);
+            element.setAttribute('height', size);
+            break;
+        default:
+            element = createPolygon(shape, x, y, size);
+            element.setAttribute('fill', '#0000FF'); // Blue color for polygon
             break;
     }
+
+    element.setAttribute('stroke', 'black');
+    element.setAttribute('stroke-width', '1');
+    return element;
 }
 
-function drawSimpleCar(two, size, x, y) {
-    const group = two.makeGroup();
-    const body = two.makeRectangle(x, y, size * 0.8, size * 0.4);
-    const wheel1 = two.makeCircle(x - size * 0.2, y + size * 0.2, size * 0.1);
-    const wheel2 = two.makeCircle(x + size * 0.2, y + size * 0.2, size * 0.1);
-    group.add(body, wheel1, wheel2);
-    group.fill = '#3498db';
-    group.noStroke();
-}
-
-function drawStar(two, size, x, y) {
-    const outerRadius = size / 2;
-    const innerRadius = outerRadius * 0.4;
-    const numPoints = 5;
-    const angleStep = Math.PI / numPoints;
-
-    let points = [];
-    for (let i = 0; i < numPoints * 2; i++) {
-        const radius = i % 2 === 0 ? outerRadius : innerRadius;
-        const angle = i * angleStep - Math.PI / 2; // Start at top
-        points.push(new Two.Anchor(
-            x + radius * Math.cos(angle),
-            y + radius * Math.sin(angle)
-        ));
-    }
-
-    const star = two.makePath(points, true);
-    star.fill = '#FFD700';
-    star.noStroke();
-}
-
-function drawSimpleCoin(two, size, x, y) {
-    const coin = two.makeCircle(x, y, size * 0.4);
-    coin.fill = '#f1c40f';
-    coin.noStroke();
-}
-
-function drawCircle(two, size, x, y) {
-    const circle = two.makeCircle(x, y, size / 2);
-    circle.fill = '#00F';
-    circle.noStroke();
-}
-
-function drawSquare(two, size, x, y) {
-    const square = two.makeRectangle(x, y, size, size);
-    square.fill = '#0F0';
-    square.noStroke();
-}
-
-function drawPolygon(two, sides, size, x, y) {
-    if (!sides) return; // Ensure sides is provided
-
-    const radius = size / 2;
-    const angleStep = (2 * Math.PI) / sides;
+function createPolygon(shape, x, y, size) {
+    const ns = "http://www.w3.org/2000/svg";
+    const element = document.createElementNS(ns, 'polygon');
+    const sides = getSidesFromShape(shape);
     const points = [];
 
     for (let i = 0; i < sides; i++) {
-        const xOffset = x + radius * Math.cos(i * angleStep);
-        const yOffset = y + radius * Math.sin(i * angleStep);
-        points.push(new Two.Anchor(xOffset, yOffset));
+        const angle = (i * 2 * Math.PI / sides) - Math.PI / 2;
+        const px = x + size / 2 * Math.cos(angle);
+        const py = y + size / 2 * Math.sin(angle);
+        points.push(`${px},${py}`);
     }
 
-    const polygon = two.makePath(points, true);
-    polygon.fill = '#00F';
-    polygon.noStroke();
+    element.setAttribute('points', points.join(' '));
+    return element;
+}
+
+function getSidesFromShape(shape) {
+    switch (shape) {
+        case 'triangle': return 3;
+        case 'quadrilateral': return 4;
+        case 'pentagon': return 5;
+        case 'hexagon': return 6;
+        case 'heptagon': return 7;
+        case 'octagon': return 8;
+        case 'nonagon': return 9;
+        case 'decagon': return 10;
+        default: return 5;
+    }
+}
+
+function getRandomColor() {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
