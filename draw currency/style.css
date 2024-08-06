@@ -1,0 +1,21 @@
+#drawing-area {
+    display: grid;
+    gap: 20px; /* Ensure proper spacing between grid items */
+    grid-template-columns: repeat(4, 100px); 
+  }
+  
+  .grid-item {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevent overflow of images */
+  }
+  
+  .grid-item img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* Ensure images fit within the grid item without distortion */
+  }
+  

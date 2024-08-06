@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Grid</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Currency Grid</h1>
+  <form id="currency-form">
+    <label for="denomination">Currency Denomination (comma-separated values, e.g., 200,20,10,2):</label>
+    <input type="text" id="denomination" name="denomination" required>
+    <br>
+    <label for="order">Currency Order:</label>
+    <select id="order" name="order">
+      <option value="descending">Descending</option>
+      <option value="ascending">Ascending</option>
+    </select>
+    <br>
+    <button type="submit">Generate Grid</button>
+  </form>
+  <div id="drawing-area"></div>
+  <script src="schema.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
