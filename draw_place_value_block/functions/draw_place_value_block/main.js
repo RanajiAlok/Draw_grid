@@ -4,27 +4,27 @@ function setup() {
   // Parse URL parameters
   const urlParams = new URLSearchParams(window.location.search);
   params = Object.fromEntries(urlParams);
-  
+
   // Convert string values to appropriate types
   params.columns = parseInt(params.columns);
   params.rows = parseInt(params.rows);
   params.block_size = parseInt(params.block_size);
-  params.shading = params.shading === 'true';
-  params.label_blocks = params.label_blocks === 'true';
-  params.border_visibility = params.border_visibility === 'true';
+  params.shading = params.shading === "true";
+  params.label_blocks = params.label_blocks === "true";
+  params.border_visibility = params.border_visibility === "true";
   params.additional_number = parseInt(params.additional_number) || 0;
-  params.show_operation_sign = params.show_operation_sign === 'true';
+  params.show_operation_sign = params.show_operation_sign === "true";
 
   // Set default values if not provided
   params.block_size = params.block_size || 10;
-  params.color_scheme = params.color_scheme || 'default';
+  params.color_scheme = params.color_scheme || "default";
 
   drawPlaceValueBlocks();
 }
 
 function drawPlaceValueBlocks() {
-  const container = document.getElementById('canvas-container');
-  container.innerHTML = ''; // Clear previous content
+  const container = document.getElementById("canvas-container");
+  container.innerHTML = ""; // Clear previous content
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("width", "600");
@@ -70,7 +70,10 @@ function drawPlaceValueBlocks() {
     svg.appendChild(label);
   }
 
-  const totalText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  const totalText = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "text"
+  );
   totalText.setAttribute("x", "300");
   totalText.setAttribute("y", "380");
   totalText.setAttribute("font-size", "24");
@@ -90,15 +93,30 @@ function createBlockGroup(x, y, value, count) {
 
   if (value === 100) {
     for (let i = 0; i < count; i++) {
-      createCubeBlock(group, (i % 3) * 40, Math.floor(i / 3) * 40, 30, colors, 30); // Adjust size and spacing
+      createCubeBlock(
+        group,
+        (i % 3) * 40,
+        Math.floor(i / 3) * 40,
+        30,
+        colors,
+        30
+      ); // Adjust size and spacing
     }
   } else if (value === 10) {
     for (let i = 0; i < count; i++) {
-      createCubeBlock(group, (i % 10) * 14, Math.floor(i / 10) * 14, 10, colors, 10); // Adjust size and spacing
+      for (let j = 0; j < 10; j++) {
+        createCubeBlock(group, i * 15, j * 15, 10, colors); // Adjust size and spacing for vertical stack
+      }
     }
   } else if (value === 1) {
     for (let i = 0; i < count; i++) {
-      createCubeBlock(group, (i % 10) * 14, Math.floor(i / 10) * 14, 10, colors); // Adjust size and spacing
+      createCubeBlock(
+        group,
+        (i % 10) * 14,
+        Math.floor(i / 10) * 14,
+        10,
+        colors
+      ); // Adjust size and spacing
     }
   }
 
@@ -119,15 +137,28 @@ function createCubeBlock(parent, x, y, size, colors, height = size) {
 
   // Top face
   const top = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-  top.setAttribute("points", `${x},${y} ${x+size/5},${y-size/5} ${x+size+size/5},${y-size/5} ${x+size},${y}`);
+  top.setAttribute(
+    "points",
+    `${x},${y} ${x + size / 5},${y - size / 5} ${x + size + size / 5},${
+      y - size / 5
+    } ${x + size},${y}`
+  );
   top.setAttribute("fill", colors.top);
   top.setAttribute("stroke", "black");
   top.setAttribute("stroke-width", "1");
   parent.appendChild(top);
 
   // Right face
-  const right = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-  right.setAttribute("points", `${x+size},${y} ${x+size+size/5},${y-size/5} ${x+size+size/5},${y+height-size/5} ${x+size},${y+height}`);
+  const right = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "polygon"
+  );
+  right.setAttribute(
+    "points",
+    `${x + size},${y} ${x + size + size / 5},${y - size / 5} ${
+      x + size + size / 5
+    },${y + height - size / 5} ${x + size},${y + height}`
+  );
   right.setAttribute("fill", colors.right);
   right.setAttribute("stroke", "black");
   right.setAttribute("stroke-width", "1");
@@ -145,7 +176,10 @@ function addGridLines(parent, x, y, size, height) {
   gridGroup.setAttribute("stroke-width", "0.5");
 
   for (let i = 1; i < 10; i++) {
-    const horizontalLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    const horizontalLine = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "line"
+    );
     horizontalLine.setAttribute("x1", x);
     horizontalLine.setAttribute("y1", y + i * (height / 10));
     horizontalLine.setAttribute("x2", x + size);
@@ -153,7 +187,10 @@ function addGridLines(parent, x, y, size, height) {
     gridGroup.appendChild(horizontalLine);
 
     if (size === height) {
-      const verticalLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      const verticalLine = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "line"
+      );
       verticalLine.setAttribute("x1", x + i * (size / 10));
       verticalLine.setAttribute("y1", y);
       verticalLine.setAttribute("x2", x + i * (size / 10));
