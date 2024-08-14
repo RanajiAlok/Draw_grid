@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Place Value Blocks</title>
+    <style>
+        #drawing {
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="drawing">
+        <iframe id="resultFrame" style="width: 1040px; height:520px" name="resultFrame"></iframe>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.7.9/two.min.js"></script>
+    <script src="main.js"></script>
+    <script src="schema.js"></script>
+
+    <script>
+        function getQueryParams() {
+            const params = {};
+            window.location.search.substring(1).split('&').forEach(function(pair) {
+                const [key, value] = pair.split('=');
+                params[decodeURIComponent(key)] = decodeURIComponent(value);
+            });
+            return params;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = getQueryParams();
+            console.log(JSON.stringify(params));
+
+            drawPlaceValueBlocks(params);
+        });
+    </script>
+</body>
+</html>

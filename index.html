@@ -1,0 +1,69 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/JSV@4.0.2/lib/jsv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonform@2.2.5/lib/jsonform.min.js"></script>   
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: row">
+        <nav id="shapeNav" style="width: 80px;flex-grow: 1">
+            <button onclick="draw_shape('draw_place_value_block')">draw_place_value_block</button>
+            
+
+        </nav>
+        <div style="flex-grow: 1">
+            <div id="jsonforms">
+                <form></form>
+            </div>
+            <iframe id="resultFrame" style="width: 520px; height:520px" name="resultFrame"></iframe>
+        </div>
+    </div>
+
+    <script>
+        async function draw_shape(shape_function_name) {
+            try {
+                const response = await fetch(`functions/${shape_function_name}/schema.js`);
+                const schemaText = await response.text();
+                const regex = /const schema = (\{[\s\S]*?\});/;
+                // Extract the schema object from the text
+                const schemaMatch = schemaText.match(regex);
+                if (!schemaMatch) {
+                    throw new Error('Schema not found in the file');
+                }
+
+                const schema = JSON.parse(schemaMatch[1]);
+
+                $("#jsonforms")
+                .find("form")
+                .empty()
+                .jsonForm({
+                    schema: schema,
+                    onSubmit: function (errors, values) {
+                        if (errors) {
+                        console.error(errors);
+                        } else {
+                            console.log("Values :: ", values)
+                            handleSubmit(values, shape_function_name);
+                        }
+                    },
+                    });
+            } catch (error) {
+                console.error('Error loading schema:', error);
+            }
+        }
+
+        function handleSubmit(values, shape) {
+            // Construct URL with query parameters
+            const params = new URLSearchParams(values).toString();
+            const url = `functions/${shape}/index.html?${params}`;
+
+            // Update iframe source on form submission
+            document.getElementById('resultFrame').src = url;
+        }
+    </script>
+</body>
+
+</html>
